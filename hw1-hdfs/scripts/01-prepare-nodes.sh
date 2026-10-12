@@ -68,6 +68,8 @@ echo "JDK archive OK"
 
 
 for host in "${NODES[@]}"; do
+  ssh "${SSH_OPTIONS[@]}" "${REMOTE_USER}@${host}" \
+    "sudo sed -i 's|^127\\.0\\.1\\.1|#127.0.1.1|' /etc/hosts"
   echo
   echo "======================================"
   echo "Preparing ${host}"

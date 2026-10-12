@@ -9,12 +9,12 @@ HADOOP_HOME="/home/hadoop/hadoop"
 echo "Checking NameNode on $NN_HOST..."
 
 #проверяем, что директория существует и пуста
-ssh -i "$SSH_KEY" -o BatchMode=yes "team@$NN_HOST" \
+ssh -n -i "$SSH_KEY" -o BatchMode=yes "team@$NN_HOST" \
   "sudo test -d '$NN_DIR' &&
    sudo test -z \"\$(sudo ls -A '$NN_DIR')\""
 
 #проверяем, что NameNode не запущен
-ssh -i "$SSH_KEY" -o BatchMode=yes "team@$NN_HOST" \
+ssh -n -i "$SSH_KEY" -o BatchMode=yes "team@$NN_HOST" \
   "if sudo -u hadoop /home/hadoop/java/bin/jps -l | grep -q 'org.apache.hadoop.hdfs.server.namenode.NameNode'; then
      echo 'ERROR: NameNode is running'
      exit 1
@@ -30,7 +30,7 @@ if [[ "$confirmation" != "FORMAT" ]]; then
 fi
 
 #форматируем NameNode
-ssh -i "$SSH_KEY" -o BatchMode=yes "team@$NN_HOST" \
+ssh -n -i "$SSH_KEY" -o BatchMode=yes "team@$NN_HOST" \
   "sudo -H -u hadoop bash -c \
    'export JAVA_HOME=/home/hadoop/java;
     export HADOOP_HOME=$HADOOP_HOME;
