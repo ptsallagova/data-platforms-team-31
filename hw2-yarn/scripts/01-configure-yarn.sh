@@ -34,14 +34,14 @@ for host in "${NODES[@]}"; do
   "
 
   if ! ssh "${SSH_OPTIONS[@]}" "${REMOTE_USER}@${host}" \
-    "grep -q '^ *export JAVA_HOME=' ${HADOOP_CONF}/hadoop-env.sh"; then
+    "sudo grep -q '^ *export JAVA_HOME=' ${HADOOP_CONF}/hadoop-env.sh"; then
     echo "WARNING: JAVA_HOME is not set in hadoop-env.sh on ${host} (HW1 step 3)"
   fi
 done
 
 echo "=== Checking workers file on team-31-nn ==="
 
-workers=$(ssh "${SSH_OPTIONS[@]}" "${REMOTE_USER}@team-31-nn" "cat ${HADOOP_CONF}/workers")
+  workers=$(ssh "${SSH_OPTIONS[@]}" "${REMOTE_USER}@team-31-nn" "sudo cat ${HADOOP_CONF}/workers")
 echo "$workers"
 
 for host in "${NODES[@]}"; do
