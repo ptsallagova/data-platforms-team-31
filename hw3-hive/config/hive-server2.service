@@ -1,0 +1,24 @@
+[Unit]
+Description=Apache HiveServer2
+Wants=network-online.target hive-metastore.service
+After=network-online.target hive-metastore.service
+
+[Service]
+Type=simple
+User=hadoop
+Group=hadoop
+WorkingDirectory=/home/hadoop
+
+Environment=JAVA_HOME=/home/hadoop/java
+Environment=HADOOP_HOME=/home/hadoop/hadoop
+Environment=HADOOP_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
+Environment=HIVE_HOME=/home/hadoop/hive
+Environment=HIVE_CONF_DIR=/home/hadoop/hive-server2-conf
+
+ExecStart=/home/hadoop/hive/bin/hive --service hiveserver2
+
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
