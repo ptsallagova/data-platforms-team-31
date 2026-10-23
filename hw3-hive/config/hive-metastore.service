@@ -1,0 +1,26 @@
+
+[Unit]
+Description=Apache Hive Metastore
+Wants=network-online.target
+After=network-online.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=hadoop
+Group=hadoop
+WorkingDirectory=/home/hadoop
+
+Environment=JAVA_HOME=/home/hadoop/java
+Environment=HADOOP_HOME=/home/hadoop/hadoop
+Environment=HADOOP_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
+Environment=HIVE_HOME=/home/hadoop/hive
+Environment=HIVE_CONF_DIR=/home/hadoop/hive-metastore-conf
+
+ExecStart=/home/hadoop/hive/bin/hive --service metastore -p 9083
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
