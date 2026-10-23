@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SERVICE_NAME="hive-metastore"
-SERVICE_FILE="${1:-/tmp/hive-metastore.service}"
+SERVICE_FILE="${1:-$(cd "$(dirname "$0")/../config" && pwd)/hive-metastore.service}"
 CONF_FILE="/home/hadoop/hive-metastore-conf/hive-site.xml"
 
 echo "=== Setting up Hive Metastore service ==="
